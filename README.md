@@ -37,35 +37,64 @@ sudo dnf install python3-gobject gtk3 webkit2gtk3
 sudo pacman -S python-gobject gtk3 webkit2gtk
 ```
 
-2. Clone the repository:
-
-```bash
-git clone https://github.com/profemzy/markdown-viewer.git
-cd markdown-viewer
-```
-
-3. Install Python dependencies:
+2. Install Python dependencies:
 
 ```bash
 pip install markdown2
 ```
 
-## File Structure
+3. Clone the repository and run the installation script:
 
+```bash
+git clone https://github.com/profemzy/markdown-viewer.git
+cd markdown-viewer
+chmod +x upgrade-install.sh
+sudo ./upgrade-install.sh
 ```
-markdown-viewer/
-├── markdown_viewer.py   # Main application file
-├── templates.py         # HTML templates
-├── styles.css          # CSS styles
-└── README.md           # This file
+
+## Installation Details
+
+The installation script (`upgrade-install.sh`) handles both fresh installations and upgrades:
+
+- Installs the application to `/opt/markdown-viewer/`
+- Creates desktop entry in `/usr/share/applications/`
+- Preserves user customizations during upgrades
+- Creates automatic backup before upgrades
+- Provides uninstall capability
+
+### Upgrading
+
+To upgrade an existing installation:
+
+```bash
+sudo ./upgrade-install.sh
+```
+
+The script will:
+- Backup existing installation
+- Preserve user customizations
+- Update application files
+- Restore user settings
+
+### Uninstalling
+
+To uninstall the application:
+
+```bash
+sudo /opt/markdown-viewer/uninstall.sh
 ```
 
 ## Usage
 
-Run the application:
+### Starting the Application
 
+1. From file manager:
+   - Double click any .md file
+   - Select "Markdown Viewer" from Open With menu
+
+2. From command line:
 ```bash
-python markdown_viewer.py [optional_markdown_file]
+python3 /opt/markdown-viewer/markdown_viewer.py [optional_markdown_file]
 ```
 
 ### Keyboard Shortcuts
@@ -84,11 +113,23 @@ python markdown_viewer.py [optional_markdown_file]
 
 ### Styling
 
-You can customize the appearance by modifying the `styles.css` file. The application supports both light and dark themes through CSS variables.
+You can customize the appearance by modifying:
+```bash
+/opt/markdown-viewer/styles.css
+```
 
-### Templates
+The application supports both light and dark themes through CSS variables.
 
-HTML templates for the viewer are stored in `templates.py`. You can modify these to change the layout or add new features.
+## File Structure
+
+```
+/opt/markdown-viewer/
+├── markdown_viewer.py   # Main application file
+├── templates.py         # HTML templates
+├── styles.css          # CSS styles
+├── version.txt         # Version information
+└── uninstall.sh        # Uninstallation script
+```
 
 ## Contributing
 
@@ -101,12 +142,6 @@ HTML templates for the viewer are stored in `templates.py`. You can modify these
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- GTK team for the excellent toolkit
-- WebKit for the rendering engine
-- markdown2 package for Markdown parsing
 
 ## Future Improvements
 

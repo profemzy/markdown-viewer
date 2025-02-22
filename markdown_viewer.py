@@ -1,8 +1,7 @@
 """
 A GTK-based Markdown viewer with support for themes, zooming, and printing.
 
-This module provides a graphical interface for viewing
-Markdown files with various
+This module provides a graphical interface for viewing Markdown files with various
 features like dark/light themes, zoom controls, and print capabilities.
 """
 
@@ -12,13 +11,11 @@ import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '4.0')
-
 from gi.repository import Gtk, WebKit2, Gdk, Gio  # noqa: E402
 
 import markdown2  # noqa: E402
 
-from templates import (MAIN_TEMPLATE,  # noqa: E402
-                       EMPTY_PAGE_TEMPLATE, ERROR_TEMPLATE)
+from templates import MAIN_TEMPLATE, EMPTY_PAGE_TEMPLATE, ERROR_TEMPLATE  # noqa: E402
 
 
 class MarkdownViewer(Gtk.ApplicationWindow):
@@ -174,6 +171,9 @@ class MarkdownViewer(Gtk.ApplicationWindow):
 
         settings = self.webview.get_settings()
         settings.set_enable_developer_extras(True)
+        
+        # Connect the file chooser request signal to our open handler
+        self.webview.connect('run-file-chooser', self.on_open_clicked)
 
         scrolled = Gtk.ScrolledWindow()
         scrolled.add(self.webview)
@@ -193,9 +193,9 @@ class MarkdownViewer(Gtk.ApplicationWindow):
         accel = Gtk.AccelGroup()
         self.add_accel_group(accel)
 
-        # Define shortcuts
+        # Remove Ctrl+O from the accelerator group to handle it manually
+        # Define other shortcuts
         shortcuts = [
-            ("<Control>O", self.on_open_clicked),
             ("<Control>R", self.on_refresh_clicked),
             ("<Control>P", self.on_print_clicked),
             ("<Control>plus", self.on_zoom_in_clicked),
@@ -214,6 +214,7 @@ class MarkdownViewer(Gtk.ApplicationWindow):
                 lambda *x, cb=callback: cb(None)
             )
 
+        # Handle Ctrl+O manually through key-press-event
         self.connect("key-press-event", self.on_key_press)
 
     def show_empty_page(self):
@@ -255,7 +256,7 @@ class MarkdownViewer(Gtk.ApplicationWindow):
             self.webview.load_html(error_html, "file:///")
             self.statusbar.push(0, "Error loading file")
 
-    def on_open_clicked(self, button):
+    def on_open_clicked(self, button=None):
         """Handle the open file button click."""
         dialog = Gtk.FileChooserDialog(
             title="Select a Markdown file",
@@ -340,7 +341,10 @@ class MarkdownViewer(Gtk.ApplicationWindow):
     def on_key_press(self, widget, event):
         """Handle key press events."""
         if event.state & Gdk.ModifierType.CONTROL_MASK:
-            if event.keyval == Gdk.KEY_plus:
+            if event.keyval == Gdk.KEY_o:
+                self.on_open_clicked(None)
+                return True  # Stop event propagation
+            elif event.keyval == Gdk.KEY_plus:
                 self.on_zoom_in_clicked(None)
                 return True
             elif event.keyval == Gdk.KEY_minus:
