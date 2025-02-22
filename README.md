@@ -75,25 +75,6 @@ chmod +x upgrade-install.sh
 sudo ./upgrade-install.sh
 ```
 
-### macOS Installation
-
-1. Install Homebrew (if not already installed):
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-2. Clone the repository:
-```bash
-git clone https://github.com/yourusername/markdown-viewer.git
-cd markdown-viewer
-```
-
-3. Run the macOS installation script:
-```bash
-chmod +x macos-install.sh
-./macos-install.sh
-```
-
 ## Usage
 
 ### Starting the Application
