@@ -1,0 +1,116 @@
+/* Light theme styles */
+.light-theme {
+    --bg-color: #fff;
+    --text-color: #333;
+    --heading-color: #2c3e50;
+    --link-color: #0366d6;
+    --code-bg: #f5f5f5;
+    --blockquote-border: #ddd;
+    --blockquote-text: #666;
+    --table-border: #ddd;
+    --table-header-bg: #f5f5f5;
+}
+
+/* Dark theme styles */
+.dark-theme {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --heading-color: #9ebbdd;
+    --link-color: #66b3ff;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --blockquote-text: #999;
+    --table-border: #444;
+    --table-header-bg: #2d2d2d;
+}
+
+body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+code {
+    background-color: var(--code-bg);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+}
+
+pre {
+    background-color: var(--code-bg);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+pre code {
+    padding: 0;
+    background-color: transparent;
+}
+
+blockquote {
+    border-left: 4px solid var(--blockquote-border);
+    margin: 0;
+    padding-left: 16px;
+    color: var(--blockquote-text);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+}
+
+th, td {
+    border: 1px solid var(--table-border);
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--table-header-bg);
+}
+
+/* Print styles */
+@media print {
+    body {
+        max-width: none;
+        margin: 0;
+        color: #000;
+        background-color: #fff;
+    }
+    
+    a {
+        color: #000;
+    }
+    
+    pre, code {
+        border: 1px solid #ddd;
+    }
+}
