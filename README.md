@@ -40,7 +40,7 @@ sudo pacman -S python-gobject gtk3 webkit2gtk
 2. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/markdown-viewer.git
+git clone https://github.com/profemzy/markdown-viewer.git
 cd markdown-viewer
 ```
 
